@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function SidebarIcon({ children, active = false }) {
   return (
     <span
@@ -125,9 +127,9 @@ function DashboardSidebar() {
       </nav>
 
       <div className="mt-auto">
-        <button type="button" className="btn-primary-theme mb-5 w-full rounded-xl px-4 py-2.5 text-sm font-semibold shadow-[0_8px_16px_rgba(0,82,204,0.22)]">
+        <Link to="/add-property" className="btn-primary-theme mb-5 block w-full rounded-xl px-4 py-2.5 text-center text-sm font-semibold shadow-[0_8px_16px_rgba(0,82,204,0.22)]">
           + Add Property
-        </button>
+        </Link>
         <div className="space-y-1.5">
           <button type="button" className="grid h-11 w-full grid-cols-[32px_1fr] items-center gap-2 rounded-xl px-3 text-left text-sm text-[var(--color-secondary)] hover:bg-white/70">
             <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-secondary)]">

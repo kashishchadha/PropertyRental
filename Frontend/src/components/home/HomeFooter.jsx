@@ -8,10 +8,10 @@ function HomeFooter() {
         </div>
 
         <nav className="flex items-center gap-6 text-xs font-semibold text-[var(--color-secondary)]">
-          <a href="#" className="hover:text-[var(--color-primary)]">Terms</a>
-          <a href="#" className="hover:text-[var(--color-primary)]">Privacy</a>
-          <a href="#" className="hover:text-[var(--color-primary)]">Cookies</a>
-          <a href="#" className="hover:text-[var(--color-primary)]">Contact</a>
+          <a href="/" className="hover:text-[var(--color-primary)]">Terms</a>
+          <a href="/" className="hover:text-[var(--color-primary)]">Privacy</a>
+          <a href="/" className="hover:text-[var(--color-primary)]">Cookies</a>
+          <a href="/" className="hover:text-[var(--color-primary)]">Contact</a>
         </nav>
 
         <p className="text-xs text-[var(--color-secondary)]">© 2024 EstateConcierge. All rights reserved.</p>

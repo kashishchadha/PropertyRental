@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const navItems = ['Properties', 'Management', 'Company']
 
 function SearchIcon() {
@@ -35,10 +37,12 @@ function HomeNavbar() {
           <button className="hidden rounded-full p-2 text-[var(--color-secondary)] transition hover:bg-slate-100 hover:text-[var(--color-ink)] md:inline-flex">
             <SearchIcon />
           </button>
-          <button className="text-[var(--color-ink)] transition hover:text-[var(--color-primary)]">Login</button>
-          <button className="btn-primary-theme rounded-full px-4 py-2 shadow-sm">
+          <Link to="/login" className="text-[var(--color-ink)] transition hover:text-[var(--color-primary)]">
+            Login
+          </Link>
+          <Link to="/signup" className="btn-primary-theme rounded-full px-4 py-2 shadow-sm">
             Sign Up
-          </button>
+          </Link>
         </div>
       </div>
     </header>

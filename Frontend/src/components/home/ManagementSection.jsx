@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function FeatureItem({ title }) {
   return (
     <li className="flex items-center gap-3 text-sm font-medium text-[var(--color-secondary)]">
@@ -66,9 +68,9 @@ function ManagementSection() {
             <FeatureItem title="Automated Financial Reporting" />
           </ul>
 
-          <button className="mt-8 rounded-2xl bg-slate-800 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition hover:bg-slate-700">
+          <Link to="/dashboard" className="mt-8 inline-block rounded-2xl bg-slate-800 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition hover:bg-slate-700">
             Discover Management Tools
-          </button>
+          </Link>
         </div>
 
         <div className="self-center">

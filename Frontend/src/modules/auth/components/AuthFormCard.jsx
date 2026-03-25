@@ -74,9 +74,9 @@ function AuthFormCard({ mode }) {
           </a>
         </div>
 
-        <button type="button" className="btn-primary-theme mt-2 w-full rounded-xl px-5 py-3 text-base font-semibold shadow-[0_8px_16px_rgba(0,82,204,0.24)]">
+        <Link to="/dashboard" className="btn-primary-theme mt-2 block w-full rounded-xl px-5 py-3 text-center text-base font-semibold shadow-[0_8px_16px_rgba(0,82,204,0.24)]">
           {isLogin ? 'Sign In to Dashboard' : 'Create Account'}
-        </button>
+        </Link>
       </form>
 
       <p className="mt-6 text-center text-sm text-[var(--color-secondary)]">

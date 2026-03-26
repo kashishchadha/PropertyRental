@@ -20,14 +20,14 @@ function LockIcon() {
 
 function AuthFrame({ title, subtitle, children }) {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[var(--color-neutral)] text-[var(--color-ink)]">
+    <main className="relative min-h-screen overflow-hidden bg-(--color-neutral) text-(--color-ink)">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(0,82,204,0.08),transparent_62%)]" />
 
       <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 pt-5">
-        <Link to="/" className="text-xl font-bold text-[var(--color-ink)] md:text-2xl">
+        <Link to="/" className="text-xl font-bold text-(--color-ink) md:text-2xl">
           EstateConcierge
         </Link>
-        <Link to="/" className="text-sm font-semibold text-[var(--color-primary)] hover:opacity-80">
+        <Link to="/" className="text-sm font-semibold text-(--color-primary) hover:opacity-80">
           Back to Site
         </Link>
       </header>
@@ -35,15 +35,15 @@ function AuthFrame({ title, subtitle, children }) {
       <section className="relative z-10 mx-auto flex min-h-[calc(100vh-132px)] w-full max-w-6xl items-center justify-center px-4 py-8">
         <div className="w-full max-w-[520px] rounded-[20px] border border-white/60 bg-white/85 p-7 shadow-[0_20px_55px_rgba(15,23,42,0.10)] backdrop-blur md:p-9">
           <div className="text-center">
-            <h1 className="text-4xl font-bold leading-tight text-[var(--color-ink)]">{title}</h1>
-            <p className="mt-2 text-base text-[var(--color-secondary)]">{subtitle}</p>
+            <h1 className="text-4xl font-bold leading-tight text-(--color-ink)">{title}</h1>
+            <p className="mt-2 text-base text-(--color-secondary)">{subtitle}</p>
           </div>
 
           {children}
         </div>
       </section>
 
-      <footer className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 pb-5 text-xs text-[var(--color-secondary)] md:flex-row md:items-center md:justify-between">
+      <footer className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 pb-5 text-xs text-(--color-secondary) md:flex-row md:items-center md:justify-between">
         <p>© 2024 EstateConcierge. All rights reserved.</p>
         <div className="flex items-center gap-6">
           <span className="inline-flex items-center gap-2 uppercase tracking-[0.16em]">
@@ -56,9 +56,9 @@ function AuthFrame({ title, subtitle, children }) {
           </span>
         </div>
         <nav className="flex items-center gap-4">
-          <a href="#" className="hover:text-[var(--color-primary)]">Terms</a>
-          <a href="#" className="hover:text-[var(--color-primary)]">Privacy</a>
-          <a href="#" className="hover:text-[var(--color-primary)]">Cookies</a>
+          <a href="#" className="hover:text-(--color-primary)">Terms</a>
+          <a href="#" className="hover:text-(--color-primary)">Privacy</a>
+          <a href="#" className="hover:text-(--color-primary)">Cookies</a>
         </nav>
       </footer>
     </main>

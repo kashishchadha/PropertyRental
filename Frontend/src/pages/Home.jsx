@@ -5,7 +5,7 @@ import HomeFooter from '../components/home/HomeFooter'
 
 function Home() {
   return (
-    <div className="bg-[var(--color-neutral)] text-[var(--color-ink)]">
+    <div className="bg-(--color-neutral) text-(--color-ink)">
       <HeroSection />
       <FeaturedSection />
       <ManagementSection />

@@ -4,51 +4,86 @@ const cards = [
     value: '1,284',
     change: '~12%',
     changeColor: 'text-emerald-600',
-    accent: 'bg-[var(--color-primary)]',
+    accent: 'bg-[rgba(0,82,204,0.14)] text-(--color-primary)',
+    barAccent: 'bg-(--color-primary)',
+    icon: 'bookings',
   },
   {
     title: 'Monthly Revenue',
     value: '$42,850',
     change: '~8.4%',
     changeColor: 'text-emerald-600',
-    accent: 'bg-[var(--color-tertiary)]',
+    accent: 'bg-[rgba(122,115,144,0.16)] text-(--color-tertiary)',
+    barAccent: 'bg-(--color-tertiary)',
+    icon: 'revenue',
   },
   {
     title: 'Pending Requests',
     value: '14',
     change: '! High Priority',
     changeColor: 'text-rose-600',
-    accent: 'bg-[#b34545]',
+    accent: 'bg-[rgba(179,69,69,0.16)] text-[#b34545]',
+    barAccent: 'bg-[#b34545]',
+    icon: 'alerts',
   },
 ]
 
+function StatIcon({ type }) {
+  if (type === 'bookings') {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.8">
+        <rect x="4" y="6" width="16" height="14" rx="2" />
+        <path d="M8 4V8M16 4V8M4 11H20" />
+      </svg>
+    )
+  }
+
+  if (type === 'revenue') {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.8">
+        <rect x="3" y="7" width="18" height="11" rx="2" />
+        <circle cx="12" cy="12.5" r="2.2" />
+        <path d="M7 10H7.1M17 15H17.1" />
+      </svg>
+    )
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+      <path d="M13 2L6 13H11L10 22L18 10H13L13 2Z" />
+    </svg>
+  )
+}
+
 function Sparkline({ accent }) {
   return (
-    <div className="mt-5 flex items-end gap-4">
-      <span className="h-2 w-1 rounded bg-slate-300" />
-      <span className="h-3 w-1 rounded bg-slate-300" />
-      <span className="h-4 w-1 rounded bg-slate-300" />
-      <span className="h-5 w-1 rounded bg-slate-400" />
-      <span className="h-4 w-1 rounded bg-slate-400" />
-      <span className={`h-6 w-1 rounded ${accent}`} />
+    <div className="mt-4 flex items-end gap-4">
+      <span className="h-2 w-1.5 rounded-full bg-slate-300" />
+      <span className="h-4 w-1.5 rounded-full bg-slate-300" />
+      <span className="h-5 w-1.5 rounded-full bg-slate-400" />
+      <span className="h-6 w-1.5 rounded-full bg-slate-400" />
+      <span className="h-5 w-1.5 rounded-full bg-slate-500" />
+      <span className={`h-7 w-1.5 rounded-full ${accent}`} />
     </div>
   )
 }
 
 function DashboardStats() {
   return (
-    <div className="grid gap-4 lg:grid-cols-3">
+    <div className="grid gap-3 lg:grid-cols-3">
       {cards.map((card) => (
-        <article key={card.title} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-[var(--color-secondary)]">{card.title}</p>
-          <p className="mt-1 text-[36px] font-bold leading-tight text-[var(--color-ink)]">{card.value}</p>
-          <div className="mt-2 flex items-center justify-between">
-            <p className={`text-xs font-semibold ${card.changeColor}`}>{card.change}</p>
-            <span className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-white ${card.accent}`}>
-              <span className="h-2 w-2 rounded-full bg-white" />
+        <article key={card.title} className="rounded-3xl border border-slate-200 bg-white p-5">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[31px] leading-none font-bold text-(--color-ink)">{card.value}</p>
+              <p className="mt-3 text-xs font-semibold text-(--color-secondary)">{card.title}</p>
+            </div>
+            <span className={`inline-flex h-9 w-9 items-center justify-center rounded-full ${card.accent}`}>
+              <StatIcon type={card.icon} />
             </span>
           </div>
-          <Sparkline accent={card.accent} />
+          <p className={`mt-3 text-xs font-semibold ${card.changeColor}`}>{card.change}</p>
+          <Sparkline accent={card.barAccent} />
         </article>
       ))}
     </div>

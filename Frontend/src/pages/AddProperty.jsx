@@ -13,8 +13,8 @@ function AddProperty() {
 
           <main className="flex-1 px-6 py-6 md:px-8">
             <section>
-              <h1 className="text-4xl font-bold text-[var(--color-ink)]">Property Overview</h1>
-              <p className="mt-1 text-base text-[var(--color-secondary)]">
+              <h1 className="text-4xl font-bold text-(--color-ink)">Property Overview</h1>
+              <p className="mt-1 text-base text-(--color-secondary)">
                 Let&apos;s start with the basic details of your premium listing. Ensure the description highlights the lifestyle value.
               </p>
             </section>
@@ -25,15 +25,15 @@ function AddProperty() {
           </main>
 
           <footer className="flex items-center justify-between gap-3 border-t border-slate-200 px-6 py-4 md:px-8">
-            <button type="button" className="rounded-xl bg-[#dde5ee] px-6 py-2.5 text-sm font-semibold text-[var(--color-ink)]">
+            <button type="button" className="rounded-xl bg-[#dde5ee] px-6 py-2.5 text-sm font-semibold text-(--color-ink)">
               Save Draft
             </button>
 
             <div className="flex items-center gap-3">
-              <button type="button" className="rounded-xl border border-dashed border-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-secondary)]">
+              <button type="button" className="rounded-xl border border-dashed border-(--color-primary) px-6 py-2.5 text-sm font-semibold text-(--color-secondary)">
                 Discard
               </button>
-              <button type="button" className="rounded-xl border border-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-secondary)]">
+              <button type="button" className="rounded-xl border border-(--color-primary) px-6 py-2.5 text-sm font-semibold text-(--color-secondary)">
                 Cancel
               </button>
               <button type="button" className="btn-primary-theme rounded-xl px-8 py-2.5 text-sm font-semibold">

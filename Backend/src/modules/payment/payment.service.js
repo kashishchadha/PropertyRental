@@ -1,0 +1,73 @@
+const pool = require('../../config/db');
+const ApiError = require('../../utils/ApiError');
+
+const createPayment = async (user, payload) => {
+  const [bookings] = await pool.query(
+    `SELECT b.*, p.owner_id
+     FROM bookings b
+     JOIN properties p ON p.id = b.property_id
+     WHERE b.id = ?`,
+    [payload.booking_id]
+  );
+
+  if (bookings.length === 0) {
+    throw new ApiError(404, 'Booking not found');
+  }
+
+  const booking = bookings[0];
+
+  if (user.role !== 'admin' && booking.tenant_id !== user.sub) {
+    throw new ApiError(403, 'Only the booking tenant can pay this booking');
+  }
+
+  const [existingPaid] = await pool.query(
+    'SELECT id FROM payments WHERE booking_id = ? AND status = "paid" LIMIT 1',
+    [payload.booking_id]
+  );
+
+  if (existingPaid.length > 0) {
+    throw new ApiError(409, 'This booking has already been paid');
+  }
+
+  const [result] = await pool.query(
+    `INSERT INTO payments (booking_id, amount, provider, provider_ref, status, paid_at)
+     VALUES (?, ?, ?, ?, 'paid', NOW())`,
+    [payload.booking_id, booking.total_amount, payload.provider, payload.provider_ref]
+  );
+
+  if (booking.status === 'pending') {
+    await pool.query('UPDATE bookings SET status = "confirmed" WHERE id = ?', [payload.booking_id]);
+  }
+
+  const [rows] = await pool.query('SELECT * FROM payments WHERE id = ?', [result.insertId]);
+  return rows[0];
+};
+
+const listPaymentsForBooking = async (user, bookingId) => {
+  const [bookings] = await pool.query(
+    `SELECT b.*, p.owner_id
+     FROM bookings b
+     JOIN properties p ON p.id = b.property_id
+     WHERE b.id = ?`,
+    [bookingId]
+  );
+
+  if (bookings.length === 0) {
+    throw new ApiError(404, 'Booking not found');
+  }
+
+  const booking = bookings[0];
+  const canView = user.role === 'admin' || user.sub === booking.tenant_id || user.sub === booking.owner_id;
+
+  if (!canView) {
+    throw new ApiError(403, 'Not allowed to view these payments');
+  }
+
+  const [rows] = await pool.query('SELECT * FROM payments WHERE booking_id = ? ORDER BY created_at DESC', [bookingId]);
+  return rows;
+};
+
+module.exports = {
+  createPayment,
+  listPaymentsForBooking
+};

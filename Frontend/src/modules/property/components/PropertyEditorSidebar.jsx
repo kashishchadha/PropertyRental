@@ -59,8 +59,8 @@ function PropertyEditorSidebar() {
   return (
     <aside className="hidden h-full border-r border-slate-200 bg-[#e9edf2] px-4 py-6 md:block">
       <div className="mb-8 px-2">
-        <p className="text-2xl font-bold text-[var(--color-ink)]">The Estate</p>
-        <p className="text-sm text-[var(--color-secondary)]">Digital Concierge</p>
+        <p className="text-2xl font-bold text-(--color-ink)">The Estate</p>
+        <p className="text-sm text-(--color-secondary)">Digital Concierge</p>
       </div>
 
       <nav className="space-y-2">
@@ -69,12 +69,12 @@ function PropertyEditorSidebar() {
             key={step.id}
             className={
               step.active
-                ? 'flex h-11 w-full items-center gap-3 rounded-xl bg-white px-3 text-sm font-semibold text-[var(--color-primary)]'
-                : 'flex h-11 w-full items-center gap-3 rounded-xl px-3 text-sm font-medium text-[var(--color-secondary)] hover:bg-white/70'
+                ? 'flex h-11 w-full items-center gap-3 rounded-xl bg-white px-3 text-sm font-semibold text-(--color-primary)'
+                : 'flex h-11 w-full items-center gap-3 rounded-xl px-3 text-sm font-medium text-(--color-secondary) hover:bg-white/70'
             }
             type="button"
           >
-            <span className={step.active ? 'inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--color-primary)] text-white' : 'inline-flex h-7 w-7 items-center justify-center text-[var(--color-secondary)]'}>
+            <span className={step.active ? 'inline-flex h-7 w-7 items-center justify-center rounded-lg bg-(--color-primary) text-white' : 'inline-flex h-7 w-7 items-center justify-center text-(--color-secondary)'}>
               <StepIcon type={step.id} />
             </span>
             {step.label}

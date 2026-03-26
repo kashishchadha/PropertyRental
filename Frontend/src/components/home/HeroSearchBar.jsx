@@ -1,6 +1,6 @@
 function PinIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-[var(--color-primary)]" stroke="currentColor" strokeWidth="2">
+    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-(--color-primary)" stroke="currentColor" strokeWidth="2">
       <path d="M12 21C16.2 16.8 18.5 13.7 18.5 10.5C18.5 6.9 15.6 4 12 4C8.4 4 5.5 6.9 5.5 10.5C5.5 13.7 7.8 16.8 12 21Z" />
       <circle cx="12" cy="10.5" r="2.3" />
     </svg>
@@ -9,7 +9,7 @@ function PinIcon() {
 
 function CashIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-[var(--color-primary)]" stroke="currentColor" strokeWidth="2">
+    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-(--color-primary)" stroke="currentColor" strokeWidth="2">
       <rect x="3" y="6" width="18" height="12" rx="2" />
       <circle cx="12" cy="12" r="2.5" />
       <path d="M7 9H7.1M17 15H17.1" />
@@ -19,7 +19,7 @@ function CashIcon() {
 
 function HomeIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-[var(--color-primary)]" stroke="currentColor" strokeWidth="2">
+    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-(--color-primary)" stroke="currentColor" strokeWidth="2">
       <path d="M3 10.5L12 4L21 10.5" />
       <path d="M6.5 9.7V20H17.5V9.7" />
       <path d="M10 20V14H14V20" />
@@ -39,11 +39,11 @@ function SearchIcon() {
 function FilterItem({ icon, label, value }) {
   return (
     <div className="min-w-[140px] px-3 py-1">
-      <div className="mb-1 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-secondary)]">
+      <div className="mb-1 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-(--color-secondary)">
         {icon}
         <span>{label}</span>
       </div>
-      <div className="text-sm font-semibold text-[var(--color-secondary)]">{value}</div>
+      <div className="text-sm font-semibold text-(--color-secondary)">{value}</div>
     </div>
   )
 }

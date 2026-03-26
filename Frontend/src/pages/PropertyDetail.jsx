@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../modules/auth/store/useAuthStore'
 import d1 from '../assets/d1.png'
 import d2 from '../assets/d2.png'
 import d3 from '../assets/d3.png'
@@ -50,22 +51,46 @@ function HeartIcon({ filled = false }) {
 
 function PropertyDetail() {
   const [isSaved, setIsSaved] = useState(false)
+  const navigate = useNavigate()
+  const user = useAuthStore((state) => state.user)
+  const isAuthenticated = Boolean(user)
+  const logout = useAuthStore((state) => state.logout)
+
+  const handleLogout = () => {
+    logout()
+    navigate('/')
+  }
 
   return (
-    <div className="min-h-screen bg-[#f3f5f8] text-[var(--color-ink)]">
+    <div className="min-h-screen bg-[#f3f5f8] text-(--color-ink)">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex h-16 w-full max-w-[1240px] items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link to="/" className="text-xl font-bold">EstateConcierge</Link>
 
-          <nav className="hidden items-center gap-6 text-sm font-semibold text-[var(--color-secondary)] md:flex">
-            <Link to="/properties" className="border-b-2 border-[var(--color-primary)] pb-1 text-[var(--color-primary)]">Properties</Link>
-            <Link to="/dashboard" className="hover:text-[var(--color-ink)]">Management</Link>
-            <a href="#" className="hover:text-[var(--color-ink)]">Company</a>
+          <nav className="hidden items-center gap-6 text-sm font-semibold text-(--color-secondary) md:flex">
+            <Link to="/properties" className="border-b-2 border-(--color-primary) pb-1 text-(--color-primary)">Properties</Link>
+            <Link to="/dashboard" className="hover:text-(--color-ink)">Management</Link>
+            <a href="#" className="hover:text-(--color-ink)">Company</a>
           </nav>
 
           <div className="flex items-center gap-3 text-sm font-semibold">
-            <Link to="/login" className="text-[var(--color-secondary)] hover:text-[var(--color-ink)]">Login</Link>
-            <Link to="/signup" className="btn-primary-theme rounded-full px-4 py-2 text-xs">Sign Up</Link>
+            {isAuthenticated ? (
+              <>
+                <span className="hidden text-(--color-secondary) md:inline">Hi, {user.name}</span>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="rounded-full border border-slate-300 px-4 py-2 text-xs text-(--color-secondary) hover:bg-slate-100"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="text-(--color-secondary) hover:text-(--color-ink)">Login</Link>
+                <Link to="/signup" className="btn-primary-theme rounded-full px-4 py-2 text-xs">Sign Up</Link>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -78,8 +103,8 @@ function PropertyDetail() {
         <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h1 className="text-4xl font-bold leading-tight sm:text-5xl">The Obsidian Penthouse</h1>
-            <div className="mt-2 flex items-center gap-4 text-sm text-[var(--color-secondary)]">
-              <span className="font-semibold text-[var(--color-primary)]">★ 4.98</span>
+            <div className="mt-2 flex items-center gap-4 text-sm text-(--color-secondary)">
+              <span className="font-semibold text-(--color-primary)">★ 4.98</span>
               <span>(128 reviews)</span>
               <span>•</span>
               <span>Mayfair, London, UK</span>
@@ -135,7 +160,7 @@ function PropertyDetail() {
               <p className="mt-3 text-[15px] leading-7 text-slate-600">
                 The interior palette features honed Nero Marquina marble, wire-brushed oak, and hand-applied Venetian plaster. Every window frame serves as a picture frame, capturing the dynamic energy of London from sunrise to the late-night city glow.
               </p>
-              <button type="button" className="mt-4 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary-strong)]">
+              <button type="button" className="mt-4 text-sm font-semibold text-(--color-primary) hover:text-(--color-primary-strong)">
                 Show more →
               </button>
             </article>
@@ -157,7 +182,7 @@ function PropertyDetail() {
             <section className="mt-9 border-t border-slate-200 pt-7">
               <div className="flex items-center justify-between">
                 <h2 className="text-3xl font-bold">Client Experiences</h2>
-                <p className="text-lg font-semibold text-[var(--color-primary)]">★ 4.98</p>
+                <p className="text-lg font-semibold text-(--color-primary)">★ 4.98</p>
               </div>
 
               <div className="mt-5 grid gap-4 md:grid-cols-2">
@@ -175,9 +200,9 @@ function PropertyDetail() {
           <aside className="space-y-4 lg:sticky lg:top-6 lg:self-start">
             <div className="rounded-3xl bg-white p-5 shadow-sm">
               <div className="flex items-start justify-between gap-2">
-                <p className="text-4xl font-bold text-[var(--color-primary)]">£2,450</p>
+                <p className="text-4xl font-bold text-(--color-primary)">£2,450</p>
                 <p className="pt-2 text-sm text-slate-500">/ night</p>
-                <p className="ml-auto pt-2 text-sm font-semibold text-[var(--color-primary)]">★ 4.98</p>
+                <p className="ml-auto pt-2 text-sm font-semibold text-(--color-primary)">★ 4.98</p>
               </div>
 
               <div className="mt-4 grid grid-cols-2 gap-2">
@@ -218,7 +243,7 @@ function PropertyDetail() {
                 <div className="h-2 rounded-full bg-slate-200" />
                 <div className="flex items-center justify-between pt-1 text-base font-bold text-slate-800">
                   <span>Total</span>
-                  <span className="text-[var(--color-primary)]">£8,050</span>
+                  <span className="text-(--color-primary)">£8,050</span>
                 </div>
               </div>
             </div>

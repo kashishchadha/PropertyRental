@@ -5,8 +5,8 @@ function SidebarIcon({ children, active = false }) {
     <span
       className={
         active
-          ? 'inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-primary)] text-white'
-          : 'inline-flex h-10 w-10 items-center justify-center rounded-xl text-[var(--color-secondary)]'
+          ? 'inline-flex h-10 w-10 items-center justify-center rounded-xl bg-(--color-primary) text-white'
+          : 'inline-flex h-10 w-10 items-center justify-center rounded-xl text-(--color-secondary)'
       }
     >
       {children}
@@ -93,7 +93,7 @@ function DashboardSidebar() {
   return (
     <aside className="flex h-full flex-col border-r border-slate-200 bg-[#e9edf2] pl-2 pr-4 py-5">
       <div className="mb-8 flex items-center gap-3 px-1">
-        <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)] text-white">
+        <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-(--color-primary) text-white">
           <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="1.8">
             <path d="M4 5H20V19H4V5Z" />
             <path d="M4 9H20" />
@@ -102,16 +102,16 @@ function DashboardSidebar() {
           </svg>
         </div>
         <div>
-          <p className="text-2xl font-bold leading-none text-[var(--color-primary)]">Management</p>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-secondary)]">Premium Suite</p>
+          <p className="text-2xl font-bold leading-none text-(--color-primary)">Management</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-(--color-secondary)">Premium Suite</p>
         </div>
       </div>
 
       <nav className="space-y-1.5">
         {menuItems.map((item) => {
           const itemClass = item.active
-            ? 'grid h-14 w-full grid-cols-[40px_1fr] items-center gap-3 rounded-2xl bg-white px-3 text-left text-sm font-semibold text-[var(--color-primary)]'
-            : 'grid h-14 w-full grid-cols-[40px_1fr] items-center gap-3 rounded-2xl px-3 text-left text-sm font-medium text-[var(--color-secondary)] hover:bg-white/70'
+            ? 'grid h-14 w-full grid-cols-[40px_1fr] items-center gap-3 rounded-2xl bg-white px-3 text-left text-sm font-semibold text-(--color-primary)'
+            : 'grid h-14 w-full grid-cols-[40px_1fr] items-center gap-3 rounded-2xl px-3 text-left text-sm font-medium text-(--color-secondary) hover:bg-white/70'
 
           if (item.to) {
             return (
@@ -140,14 +140,14 @@ function DashboardSidebar() {
           + Add Property
         </Link>
         <div className="space-y-1.5">
-          <button type="button" className="grid h-11 w-full grid-cols-[32px_1fr] items-center gap-2 rounded-xl px-3 text-left text-sm text-[var(--color-secondary)] hover:bg-white/70">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-secondary)]">
+          <button type="button" className="grid h-11 w-full grid-cols-[32px_1fr] items-center gap-2 rounded-xl px-3 text-left text-sm text-(--color-secondary) hover:bg-white/70">
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-(--color-secondary)">
               <SettingsIcon />
             </span>
             Settings
           </button>
-          <button type="button" className="grid h-11 w-full grid-cols-[32px_1fr] items-center gap-2 rounded-xl px-3 text-left text-sm text-[var(--color-secondary)] hover:bg-white/70">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-secondary)]">
+          <button type="button" className="grid h-11 w-full grid-cols-[32px_1fr] items-center gap-2 rounded-xl px-3 text-left text-sm text-(--color-secondary) hover:bg-white/70">
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-(--color-secondary)">
               <SupportIcon />
             </span>
             Support

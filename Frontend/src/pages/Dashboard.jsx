@@ -15,8 +15,8 @@ function Dashboard() {
 
             <main className="flex-1 px-5 py-6 lg:px-8">
               <section>
-                <h1 className="text-5xl font-bold leading-tight text-[var(--color-ink)]">Welcome back, Alexandra</h1>
-                <p className="mt-2 max-w-3xl text-lg text-[var(--color-secondary)]">
+                <h1 className="text-5xl font-bold leading-tight text-(--color-ink)">Welcome back, Alexandra</h1>
+                <p className="mt-2 max-w-3xl text-lg text-(--color-secondary)">
                   Here is what&apos;s happening across your estate portfolio today. You have 3 pending requests that need attention.
                 </p>
               </section>
@@ -31,7 +31,7 @@ function Dashboard() {
               </section>
             </main>
 
-            <footer className="flex items-center justify-between border-t border-slate-200 px-8 py-4 text-xs text-[var(--color-secondary)]">
+            <footer className="flex items-center justify-between border-t border-slate-200 px-8 py-4 text-xs text-(--color-secondary)">
               <p>© 2024 EstateConcierge. All rights reserved.</p>
               <nav className="hidden items-center gap-6 md:flex">
                 <a href="#">Terms</a>

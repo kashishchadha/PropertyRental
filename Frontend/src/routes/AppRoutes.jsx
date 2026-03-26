@@ -7,6 +7,7 @@ import AddProperty from '../pages/AddProperty'
 import AllProperties from '../pages/AllProperties'
 import PropertyDetail from '../pages/PropertyDetail'
 import BookingPayment from '../pages/BookingPayment'
+import ProtectedRoute from '../modules/auth/components/ProtectedRoute'
 
 function AppRoutes() {
   return (
@@ -14,8 +15,8 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/add-property" element={<AddProperty />} />
+      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="/add-property" element={<ProtectedRoute><AddProperty /></ProtectedRoute>} />
       <Route path="/properties" element={<AllProperties />} />
       <Route path="/properties/obsidian-penthouse" element={<PropertyDetail />} />
       <Route path="/booking-payment" element={<BookingPayment />} />

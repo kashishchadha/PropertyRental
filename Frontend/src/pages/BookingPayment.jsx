@@ -40,12 +40,12 @@ function IconShield() {
 
 function BookingPayment() {
   return (
-    <div className="min-h-screen bg-[#f1f3f7] text-[var(--color-ink)]">
+    <div className="min-h-screen bg-[#f1f3f7] text-(--color-ink)">
       <div className="flex h-8 items-center bg-[#121821] px-4 text-sm font-semibold text-slate-200 sm:px-6 lg:px-8">
         ← Booking &amp; Payment
       </div>
 
-      <main className="mx-auto max-w-[1280px] rounded-t-xl bg-[#f6f8fb] px-4 pb-6 pt-4 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl rounded-t-xl bg-[#f6f8fb] px-4 pb-6 pt-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">
           <Link to="/" className="text-lg font-bold">EstateConcierge</Link>
           <Link to="/properties/obsidian-penthouse" className="text-sm font-semibold text-slate-500 hover:text-slate-700">← Back to Details</Link>
@@ -62,19 +62,19 @@ function BookingPayment() {
               <div className="flex gap-4">
                 <img src={d5} alt="The Azure Penthouse" className="h-24 w-24 rounded-xl object-cover" />
                 <div className="min-w-0 flex-1">
-                  <p className="inline-flex rounded-full bg-blue-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)]">Premium Managed</p>
+                  <p className="inline-flex rounded-full bg-blue-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-(--color-primary)">Premium Managed</p>
                   <h2 className="mt-2 text-2xl font-bold">The Azure Penthouse</h2>
                   <p className="mt-1 text-sm text-slate-500">Manhattan, New York City</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600">★ 4.9 (128 reviews)</span>
-                    <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-[var(--color-primary)]">Verified</span>
+                    <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-(--color-primary)">Verified</span>
                   </div>
                 </div>
               </div>
             </article>
 
             <article className="rounded-2xl bg-white p-4 shadow-sm">
-              <h3 className="text-base font-bold text-[var(--color-primary)]">Booking Details</h3>
+              <h3 className="text-base font-bold text-(--color-primary)">Booking Details</h3>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3">
@@ -84,7 +84,7 @@ function BookingPayment() {
                       <p className="mt-1 text-sm font-semibold text-slate-700">Oct 24 - Oct 31, 2024</p>
                       <p className="text-xs text-slate-400">7 nights total</p>
                     </div>
-                    <button type="button" className="text-xs font-semibold text-[var(--color-primary)]">Edit</button>
+                    <button type="button" className="text-xs font-semibold text-(--color-primary)">Edit</button>
                   </div>
                 </div>
 
@@ -95,7 +95,7 @@ function BookingPayment() {
                       <p className="mt-1 text-sm font-semibold text-slate-700">2 Adults, 1 Pet</p>
                       <p className="text-xs text-slate-400">Maximum occupancy: 4</p>
                     </div>
-                    <button type="button" className="text-xs font-semibold text-[var(--color-primary)]">Edit</button>
+                    <button type="button" className="text-xs font-semibold text-(--color-primary)">Edit</button>
                   </div>
                 </div>
               </div>
@@ -107,7 +107,7 @@ function BookingPayment() {
                     <IconBriefcase />
                     Airport Transfer (Tesla Model X)
                   </span>
-                  <span className="font-semibold text-[var(--color-primary)]">$85.00</span>
+                  <span className="font-semibold text-(--color-primary)">$85.00</span>
                 </div>
                 <div className="border-t border-slate-200" />
                 <div className="flex items-center justify-between px-3 py-3 text-sm">
@@ -115,7 +115,7 @@ function BookingPayment() {
                     <IconBriefcase />
                     Daily Turndown Service
                   </span>
-                  <span className="font-semibold text-[var(--color-primary)]">$120.00</span>
+                  <span className="font-semibold text-(--color-primary)">$120.00</span>
                 </div>
               </div>
             </article>
@@ -138,7 +138,7 @@ function BookingPayment() {
             </div>
             <div className="mt-3 flex items-center justify-between border-t border-slate-200 pt-3">
               <span className="text-sm font-semibold text-slate-700">Total (USD)</span>
-              <span className="text-3xl font-bold text-[var(--color-primary)]">$3,545.70</span>
+              <span className="text-3xl font-bold text-(--color-primary)">$3,545.70</span>
             </div>
 
             <div className="mt-6">

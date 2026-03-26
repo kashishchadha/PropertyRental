@@ -1,0 +1,44 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: property_rental_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: property_rental
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: N2pqg3MG4nWoZSWMulsAW9tT
+    ports:
+      - '3307:3306'
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uapp_user", "-pN2pqg3MG4nWoZSWMulsAW9tT"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  api:
+    build: .
+    container_name: property_rental_api
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: on-failure
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: app_user
+      DB_PASSWORD: N2pqg3MG4nWoZSWMulsAW9tT
+      DB_NAME: property_rental
+      DB_CONNECTION_LIMIT: 10
+      JWT_SECRET: OVvEfCukLfQCFnymKRW0Rb8AGJkTTbGbWxR44z--eduFtd3deGaAI2YTa2k-oa6t
+      JWT_EXPIRES_IN: 7d
+    ports:
+      - '5000:5000'
+
+volumes:
+  mysql_data:

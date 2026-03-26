@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import img1 from '../../assets/img1.png'
 import img2 from '../../assets/img2.png'
 import img3 from '../../assets/img3.png'
@@ -76,9 +77,9 @@ function FeaturedSection() {
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">Curated Selection</p>
         <div className="mt-4 flex items-end justify-between gap-4">
           <h2 className="text-4xl font-bold text-[var(--color-ink)] md:text-5xl">Featured Residences</h2>
-          <a href="#" className="text-sm font-semibold text-[var(--color-primary)] hover:opacity-85">
+          <Link to="/properties" className="text-sm font-semibold text-[var(--color-primary)] hover:opacity-85">
             View All Properties
-          </a>
+          </Link>
         </div>
 
         <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">

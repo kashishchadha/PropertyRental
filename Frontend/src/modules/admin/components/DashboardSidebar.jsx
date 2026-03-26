@@ -83,7 +83,7 @@ function SupportIcon() {
 
 const menuItems = [
   { id: 'overview', label: 'Overview', active: true },
-  { id: 'properties', label: 'Properties' },
+  { id: 'properties', label: 'Properties', to: '/properties' },
   { id: 'bookings', label: 'Bookings' },
   { id: 'financials', label: 'Financials' },
   { id: 'messages', label: 'Messages' },
@@ -108,22 +108,31 @@ function DashboardSidebar() {
       </div>
 
       <nav className="space-y-1.5">
-        {menuItems.map((item) => (
-          <button
-            key={item.id}
-            className={
-              item.active
-                ? 'grid h-14 w-full grid-cols-[40px_1fr] items-center gap-3 rounded-2xl bg-white px-3 text-left text-sm font-semibold text-[var(--color-primary)]'
-                : 'grid h-14 w-full grid-cols-[40px_1fr] items-center gap-3 rounded-2xl px-3 text-left text-sm font-medium text-[var(--color-secondary)] hover:bg-white/70'
-            }
-            type="button"
-          >
-            <SidebarIcon active={item.active}>
-              <MenuSymbol id={item.id} />
-            </SidebarIcon>
-            {item.label}
-          </button>
-        ))}
+        {menuItems.map((item) => {
+          const itemClass = item.active
+            ? 'grid h-14 w-full grid-cols-[40px_1fr] items-center gap-3 rounded-2xl bg-white px-3 text-left text-sm font-semibold text-[var(--color-primary)]'
+            : 'grid h-14 w-full grid-cols-[40px_1fr] items-center gap-3 rounded-2xl px-3 text-left text-sm font-medium text-[var(--color-secondary)] hover:bg-white/70'
+
+          if (item.to) {
+            return (
+              <Link key={item.id} to={item.to} className={itemClass}>
+                <SidebarIcon active={item.active}>
+                  <MenuSymbol id={item.id} />
+                </SidebarIcon>
+                {item.label}
+              </Link>
+            )
+          }
+
+          return (
+            <button key={item.id} className={itemClass} type="button">
+              <SidebarIcon active={item.active}>
+                <MenuSymbol id={item.id} />
+              </SidebarIcon>
+              {item.label}
+            </button>
+          )
+        })}
       </nav>
 
       <div className="mt-auto">

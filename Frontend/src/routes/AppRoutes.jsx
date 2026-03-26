@@ -6,6 +6,7 @@ import Dashboard from '../pages/Dashboard'
 import AddProperty from '../pages/AddProperty'
 import AllProperties from '../pages/AllProperties'
 import PropertyDetail from '../pages/PropertyDetail'
+import BookingPayment from '../pages/BookingPayment'
 
 function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ function AppRoutes() {
       <Route path="/add-property" element={<AddProperty />} />
       <Route path="/properties" element={<AllProperties />} />
       <Route path="/properties/obsidian-penthouse" element={<PropertyDetail />} />
+      <Route path="/booking-payment" element={<BookingPayment />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

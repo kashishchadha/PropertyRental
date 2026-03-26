@@ -4,8 +4,8 @@ import PropertyOverviewForm from '../modules/property/components/PropertyOvervie
 
 function AddProperty() {
   return (
-    <div className="min-h-screen bg-[#edf1f6] p-2 md:p-3">
-      <div className="grid min-h-[calc(100vh-16px)] w-full overflow-hidden rounded-[24px] border border-slate-200/70 bg-[#edf1f6] md:grid-cols-[190px_1fr]">
+    <div className="min-h-screen bg-[#edf1f6]">
+      <div className="grid min-h-screen w-full overflow-hidden border border-slate-200/70 bg-[#edf1f6] md:grid-cols-[190px_1fr]">
         <PropertyEditorSidebar />
 
         <div className="flex min-h-full flex-col">

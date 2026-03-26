@@ -59,7 +59,7 @@ function PropertyDetail() {
 
           <nav className="hidden items-center gap-6 text-sm font-semibold text-[var(--color-secondary)] md:flex">
             <Link to="/properties" className="border-b-2 border-[var(--color-primary)] pb-1 text-[var(--color-primary)]">Properties</Link>
-            <a href="#" className="hover:text-[var(--color-ink)]">Management</a>
+            <Link to="/dashboard" className="hover:text-[var(--color-ink)]">Management</Link>
             <a href="#" className="hover:text-[var(--color-ink)]">Company</a>
           </nav>
 
@@ -196,9 +196,9 @@ function PropertyDetail() {
                 <p className="mt-1 text-sm font-semibold text-slate-700">2 Guests</p>
               </div>
 
-              <button type="button" className="btn-primary-theme mt-4 w-full rounded-xl py-3 text-base font-semibold shadow-lg shadow-blue-900/20">
+              <Link to="/booking-payment" className="btn-primary-theme mt-4 block w-full rounded-xl py-3 text-center text-base font-semibold shadow-lg shadow-blue-900/20">
                 Book Now
-              </button>
+              </Link>
 
               <p className="mt-3 text-center text-xs text-slate-400">You won't be charged yet</p>
 

@@ -68,9 +68,9 @@ function BuildingIcon() {
   )
 }
 
-function FilterCheck({ label, checked = false }) {
+function FilterCheck({ label, checked = false, onToggle }) {
   return (
-    <label className="flex items-center gap-2 text-sm text-[var(--color-secondary)]">
+    <button type="button" onClick={onToggle} className="flex w-full items-center gap-2 text-left text-sm text-[var(--color-secondary)]">
       <span className={checked ? 'inline-flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--color-primary)] bg-[var(--color-primary)] text-white' : 'inline-flex h-4 w-4 items-center justify-center rounded-sm border border-slate-300 bg-transparent'}>
         {checked ? (
           <svg viewBox="0 0 24 24" fill="none" className="h-3 w-3" stroke="currentColor" strokeWidth="3">
@@ -78,8 +78,8 @@ function FilterCheck({ label, checked = false }) {
           </svg>
         ) : null}
       </span>
-      {label}
-    </label>
+      <span>{label}</span>
+    </button>
   )
 }
 
@@ -89,7 +89,7 @@ function PropertiesTopbar() {
       <Link to="/" className="text-xl font-bold text-[var(--color-ink)]">EstateConcierge</Link>
       <nav className="hidden items-center gap-6 text-sm font-semibold text-[var(--color-secondary)] md:flex">
         <a href="#" className="border-b-2 border-[var(--color-primary)] pb-1 text-[var(--color-primary)]">Properties</a>
-        <a href="#" className="hover:text-[var(--color-ink)]">Management</a>
+        <Link to="/dashboard" className="hover:text-[var(--color-ink)]">Management</Link>
         <a href="#" className="hover:text-[var(--color-ink)]">Company</a>
       </nav>
       <div className="flex items-center gap-3 text-sm font-semibold">
@@ -103,8 +103,16 @@ function PropertiesTopbar() {
 function FilterSidebar() {
   const minPrice = 1500
   const maxPrice = 15000
+  const propertyTypes = ['Luxury Villas', 'Modern Lofts', 'Penthouses']
+  const amenities = ['Infinity Pool', 'Private Gym', 'Concierge']
   const [price, setPrice] = useState(8500)
+  const [selectedPropertyTypes, setSelectedPropertyTypes] = useState(['Luxury Villas'])
+  const [selectedAmenities, setSelectedAmenities] = useState([])
   const progress = ((price - minPrice) / (maxPrice - minPrice)) * 100
+
+  const toggleItem = (value, setter) => {
+    setter((previous) => (previous.includes(value) ? previous.filter((item) => item !== value) : [...previous, value]))
+  }
 
   return (
     <aside className="hidden border-r border-slate-200 bg-[#e9edf2] p-4 lg:block">
@@ -151,18 +159,28 @@ function FilterSidebar() {
       <div className="mt-4 border-b border-slate-200 pb-4">
         <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-secondary)]">Property Type</p>
         <div className="mt-2 space-y-1.5">
-          <FilterCheck label="Luxury Villas" checked />
-          <FilterCheck label="Modern Lofts" />
-          <FilterCheck label="Penthouses" />
+          {propertyTypes.map((propertyType) => (
+            <FilterCheck
+              key={propertyType}
+              label={propertyType}
+              checked={selectedPropertyTypes.includes(propertyType)}
+              onToggle={() => toggleItem(propertyType, setSelectedPropertyTypes)}
+            />
+          ))}
         </div>
       </div>
 
       <div className="mt-4">
         <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-secondary)]">Amenities</p>
         <div className="mt-2 space-y-1.5">
-          <FilterCheck label="Infinity Pool" />
-          <FilterCheck label="Private Gym" />
-          <FilterCheck label="Concierge" />
+          {amenities.map((amenity) => (
+            <FilterCheck
+              key={amenity}
+              label={amenity}
+              checked={selectedAmenities.includes(amenity)}
+              onToggle={() => toggleItem(amenity, setSelectedAmenities)}
+            />
+          ))}
         </div>
       </div>
 

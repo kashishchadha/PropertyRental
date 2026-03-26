@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
 
-const navItems = ['Properties', 'Management', 'Company']
+const navItems = [
+  { label: 'Properties', to: '/properties' },
+  { label: 'Management', to: '/dashboard' },
+  { label: 'Company', to: '#' },
+]
 
 function SearchIcon() {
   return (
@@ -19,17 +23,17 @@ function HomeNavbar() {
 
         <nav className="hidden items-center gap-7 text-sm font-medium text-[var(--color-secondary)] md:flex">
           {navItems.map((item, index) => (
-            <a
-              key={item}
-              href="#"
+            <Link
+              key={item.label}
+              to={item.to}
               className={
                 index === 0
                   ? 'border-b-2 border-[var(--color-primary)] pb-1 text-[var(--color-primary)]'
                   : 'transition hover:text-[var(--color-ink)]'
               }
             >
-              {item}
-            </a>
+              {item.label}
+            </Link>
           ))}
         </nav>
 

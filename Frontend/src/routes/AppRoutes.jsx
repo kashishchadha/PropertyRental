@@ -16,9 +16,10 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-      <Route path="/add-property" element={<ProtectedRoute><AddProperty /></ProtectedRoute>} />
+      <Route path="/add-property" element={<ProtectedRoute roles={['owner', 'admin']}><AddProperty /></ProtectedRoute>} />
+      <Route path="/properties/:id/edit" element={<ProtectedRoute roles={['owner', 'admin']}><AddProperty /></ProtectedRoute>} />
       <Route path="/properties" element={<AllProperties />} />
-      <Route path="/properties/obsidian-penthouse" element={<PropertyDetail />} />
+      <Route path="/properties/:id" element={<PropertyDetail />} />
       <Route path="/booking-payment" element={<BookingPayment />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

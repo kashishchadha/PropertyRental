@@ -11,6 +11,10 @@ const toPublicUser = (user) => ({
 });
 
 const register = async ({ name, email, password, role = 'tenant' }) => {
+  if (role === 'admin') {
+    throw new ApiError(403, 'Admin registration is not allowed from public signup');
+  }
+
   const [existing] = await pool.query('SELECT id FROM users WHERE email = ?', [email]);
   if (existing.length > 0) {
     throw new ApiError(409, 'Email is already registered');

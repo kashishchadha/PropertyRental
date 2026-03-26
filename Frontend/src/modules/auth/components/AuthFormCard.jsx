@@ -20,7 +20,8 @@ function AuthFormCard({ mode }) {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'tenant'
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -53,7 +54,7 @@ function AuthFormCard({ mode }) {
 
       const payload = isLogin
         ? { email: form.email, password: form.password }
-        : { name: form.name, email: form.email, password: form.password }
+        : { name: form.name, email: form.email, password: form.password, role: form.role }
 
       const response = isLogin ? await authApi.login(payload) : await authApi.signup(payload)
       const authData = response?.data
@@ -93,6 +94,17 @@ function AuthFormCard({ mode }) {
             onChange={onChange('name')}
             className="w-full rounded-xl border border-slate-200 bg-slate-100/80 px-4 py-2.5 text-sm outline-none transition focus:border-(--color-primary) focus:bg-white"
           />
+        )}
+
+        {!isLogin && (
+          <select
+            value={form.role}
+            onChange={onChange('role')}
+            className="w-full rounded-xl border border-slate-200 bg-slate-100/80 px-4 py-2.5 text-sm outline-none transition focus:border-(--color-primary) focus:bg-white"
+          >
+            <option value="tenant">Tenant</option>
+            <option value="owner">Owner</option>
+          </select>
         )}
 
         <input

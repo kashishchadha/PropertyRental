@@ -48,7 +48,7 @@ function BookingPayment() {
       <main className="mx-auto max-w-7xl rounded-t-xl bg-[#f6f8fb] px-4 pb-6 pt-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">
           <Link to="/" className="text-lg font-bold">EstateConcierge</Link>
-          <Link to="/properties/obsidian-penthouse" className="text-sm font-semibold text-slate-500 hover:text-slate-700">← Back to Details</Link>
+          <Link to="/properties" className="text-sm font-semibold text-slate-500 hover:text-slate-700">← Back to Properties</Link>
         </div>
 
         <section className="mt-6">

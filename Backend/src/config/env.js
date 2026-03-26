@@ -13,6 +13,15 @@ for (const key of requiredKeys) {
 module.exports = {
   nodeEnv: process.env.NODE_ENV,
   port: Number(process.env.PORT),
+  trustProxy: Number(process.env.TRUST_PROXY || 1),
+  corsOrigins: (process.env.CORS_ORIGINS || 'http://localhost:5173,http://localhost:5174,http://localhost:5175')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+  rateLimit: {
+    windowMs: Number(process.env.RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000),
+    max: Number(process.env.RATE_LIMIT_MAX || 200)
+  },
   db: {
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),

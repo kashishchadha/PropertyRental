@@ -90,3 +90,71 @@ CREATE TABLE IF NOT EXISTS reviews (
   INDEX idx_reviews_property (property_id),
   INDEX idx_reviews_tenant (tenant_id)
 );
+
+-- Seed sample owner account (password hash is placeholder and not used for demo login)
+INSERT INTO users (name, email, password_hash, role)
+SELECT 'Demo Owner', 'owner.demo@propertyrental.local', '$2b$10$012345678901234567890uN8WS9Vyuk3F7S3w7Dnk3a1JpN96CBa.', 'owner'
+WHERE NOT EXISTS (
+  SELECT 1 FROM users WHERE email = 'owner.demo@propertyrental.local'
+);
+
+-- Seed sample properties for UI listing (idempotent)
+INSERT INTO properties (owner_id, title, description, city, address, price_per_night, bedrooms, bathrooms, max_guests, is_active)
+SELECT u.id,
+       'Skyline Glass Residence',
+       'Panoramic city-view apartment with premium finishes and dedicated concierge support.',
+       'New York',
+       '210 W 58th St, Manhattan',
+       420.00,
+       2,
+       2,
+       4,
+       1
+FROM users u
+WHERE u.email = 'owner.demo@propertyrental.local'
+  AND NOT EXISTS (SELECT 1 FROM properties WHERE title = 'Skyline Glass Residence');
+
+INSERT INTO properties (owner_id, title, description, city, address, price_per_night, bedrooms, bathrooms, max_guests, is_active)
+SELECT u.id,
+       'Coastal Breeze Villa',
+       'Private villa near the coast with a modern kitchen, outdoor lounge, and family-friendly layout.',
+       'San Diego',
+       '18 Harbor Crest Ave, La Jolla',
+       580.00,
+       3,
+       3,
+       6,
+       1
+FROM users u
+WHERE u.email = 'owner.demo@propertyrental.local'
+  AND NOT EXISTS (SELECT 1 FROM properties WHERE title = 'Coastal Breeze Villa');
+
+INSERT INTO properties (owner_id, title, description, city, address, price_per_night, bedrooms, bathrooms, max_guests, is_active)
+SELECT u.id,
+       'Nordic Minimal Loft',
+       'Quiet minimalist loft ideal for remote work with natural light and high-speed internet.',
+       'Bengaluru',
+       '44 Whitefield Main Rd',
+       190.00,
+       1,
+       1,
+       2,
+       1
+FROM users u
+WHERE u.email = 'owner.demo@propertyrental.local'
+  AND NOT EXISTS (SELECT 1 FROM properties WHERE title = 'Nordic Minimal Loft');
+
+INSERT INTO properties (owner_id, title, description, city, address, price_per_night, bedrooms, bathrooms, max_guests, is_active)
+SELECT u.id,
+       'Palm Garden Retreat',
+       'Spacious retreat with garden patio, ideal for group stays and long weekend bookings.',
+       'Dubai',
+       '12 Al Safa Park Villas',
+       730.00,
+       4,
+       4,
+       8,
+       1
+FROM users u
+WHERE u.email = 'owner.demo@propertyrental.local'
+  AND NOT EXISTS (SELECT 1 FROM properties WHERE title = 'Palm Garden Retreat');

@@ -91,6 +91,7 @@ function AddProperty() {
             {!isLoading ? (
               <section className="mt-6">
                 <PropertyOverviewForm
+                  key={isEditMode ? `edit-${id}-${initialValues?.id || 'loading'}` : 'create'}
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
                   isSubmitting={isSubmitting}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import globeImage from '../../../assets/globe.png'
 
 const initialFormState = {
@@ -43,10 +43,6 @@ function PropertyOverviewForm({
   error = ''
 }) {
   const [form, setForm] = useState(() => ({ ...initialFormState, ...(initialValues || {}) }))
-
-  useEffect(() => {
-    setForm({ ...initialFormState, ...(initialValues || {}) })
-  }, [initialValues])
 
   const setField = (field, value) => {
     setForm((previous) => ({ ...previous, [field]: value }))

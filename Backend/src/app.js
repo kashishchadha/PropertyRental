@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const env = require('./config/env');
+const paymentController = require('./modules/payment/payment.controller');
 
 const routes = require('./routes');
 const notFound = require('./middleware/notFound');
@@ -41,6 +42,7 @@ const apiLimiter = rateLimit({
 app.use(helmet());
 app.use(cors(corsOptions));
 app.use(morgan(env.nodeEnv === 'production' ? 'combined' : 'dev'));
+app.post('/api/v1/payments/stripe/webhook', express.raw({ type: 'application/json' }), paymentController.stripeWebhook);
 app.use(express.json({ limit: '100kb' }));
 app.use('/api', apiLimiter);
 

@@ -13,6 +13,7 @@ for (const key of requiredKeys) {
 module.exports = {
   nodeEnv: process.env.NODE_ENV,
   port: Number(process.env.PORT),
+  appBaseUrl: process.env.FRONTEND_BASE_URL || 'http://localhost:5173',
   trustProxy: Number(process.env.TRUST_PROXY || 1),
   corsOrigins: (process.env.CORS_ORIGINS || 'http://localhost:5173,http://localhost:5174,http://localhost:5175')
     .split(',')
@@ -33,5 +34,12 @@ module.exports = {
   jwt: {
     secret: process.env.JWT_SECRET,
     expiresIn: process.env.JWT_EXPIRES_IN
+  },
+  stripe: {
+    secretKey: process.env.STRIPE_SECRET_KEY || '',
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || '',
+    currency: process.env.STRIPE_CURRENCY || 'usd',
+    successUrl: process.env.STRIPE_SUCCESS_URL || '',
+    cancelUrl: process.env.STRIPE_CANCEL_URL || ''
   }
 };

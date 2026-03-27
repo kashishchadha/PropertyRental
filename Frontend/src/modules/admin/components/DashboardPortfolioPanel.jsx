@@ -1,19 +1,23 @@
 import propertyImage from '../../../assets/blackproperty.png'
 
-function DashboardPortfolioPanel() {
+function DashboardPortfolioPanel({ featuredProperty, totalRevenue, portfolioTarget }) {
+  const progressPercent = portfolioTarget > 0
+    ? Math.min(100, Math.round((totalRevenue / portfolioTarget) * 100))
+    : 0
+
   return (
     <aside className="space-y-4">
       <h2 className="text-2xl font-bold text-(--color-ink)">Active Portfolio</h2>
 
       <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 text-white shadow-sm">
         <img src={propertyImage} alt="Portfolio property" className="h-64 w-full object-cover opacity-75" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
         <div className="absolute bottom-4 left-4 right-4">
           <p className="mb-2 inline-block rounded-full bg-(--color-primary) px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]">
             Featured Estate
           </p>
-          <p className="text-3xl font-bold leading-tight">The Marble Pavilion</p>
-          <p className="text-sm text-slate-200">Beverly Hills, CA</p>
+          <p className="text-3xl font-bold leading-tight">{featuredProperty?.title || 'No Active Property'}</p>
+          <p className="text-sm text-slate-200">{featuredProperty?.city || 'N/A'}</p>
         </div>
       </div>
 
@@ -32,12 +36,12 @@ function DashboardPortfolioPanel() {
         </div>
 
         <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/85">
-          <div className="h-full w-[72%] rounded-full bg-(--color-primary)" />
+          <div className="h-full rounded-full bg-(--color-primary)" style={{ width: `${progressPercent}%` }} />
         </div>
 
         <div className="mt-3 flex items-center justify-between text-sm">
-          <p className="text-(--color-secondary)">Target: $1M</p>
-          <p className="font-semibold text-(--color-primary)">$720k (72%)</p>
+          <p className="text-(--color-secondary)">Target: ${portfolioTarget.toLocaleString()}</p>
+          <p className="font-semibold text-(--color-primary)">${Math.round(totalRevenue).toLocaleString()} ({progressPercent}%)</p>
         </div>
       </div>
     </aside>

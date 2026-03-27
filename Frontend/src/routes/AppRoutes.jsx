@@ -20,7 +20,7 @@ function AppRoutes() {
       <Route path="/properties/:id/edit" element={<ProtectedRoute roles={['owner', 'admin']}><AddProperty /></ProtectedRoute>} />
       <Route path="/properties" element={<AllProperties />} />
       <Route path="/properties/:id" element={<PropertyDetail />} />
-      <Route path="/booking-payment" element={<BookingPayment />} />
+      <Route path="/booking-payment/:bookingId" element={<ProtectedRoute><BookingPayment /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

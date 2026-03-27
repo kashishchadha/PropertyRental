@@ -1,32 +1,42 @@
-const cards = [
+const buildCards = (stats = {}) => {
+  const safeStats = {
+    totalBookings: Number(stats.totalBookings || 0),
+    confirmedBookings: Number(stats.confirmedBookings || 0),
+    totalRevenue: Number(stats.totalRevenue || 0),
+    paidPayments: Number(stats.paidPayments || 0),
+    pendingRequests: Number(stats.pendingRequests || 0)
+  }
+
+  return [
   {
     title: 'Total Bookings',
-    value: '1,284',
-    change: '~12%',
+    value: safeStats.totalBookings.toLocaleString(),
+    change: `${safeStats.confirmedBookings} confirmed`,
     changeColor: 'text-emerald-600',
     accent: 'bg-[rgba(0,82,204,0.14)] text-(--color-primary)',
     barAccent: 'bg-(--color-primary)',
-    icon: 'bookings',
+    icon: 'bookings'
   },
   {
-    title: 'Monthly Revenue',
-    value: '$42,850',
-    change: '~8.4%',
+    title: 'Revenue',
+    value: `$${safeStats.totalRevenue.toLocaleString()}`,
+    change: `${safeStats.paidPayments} paid transactions`,
     changeColor: 'text-emerald-600',
     accent: 'bg-[rgba(122,115,144,0.16)] text-(--color-tertiary)',
     barAccent: 'bg-(--color-tertiary)',
-    icon: 'revenue',
+    icon: 'revenue'
   },
   {
     title: 'Pending Requests',
-    value: '14',
-    change: '! High Priority',
-    changeColor: 'text-rose-600',
+    value: String(safeStats.pendingRequests),
+    change: safeStats.pendingRequests > 0 ? '! Requires attention' : 'All clear',
+    changeColor: safeStats.pendingRequests > 0 ? 'text-rose-600' : 'text-emerald-600',
     accent: 'bg-[rgba(179,69,69,0.16)] text-[#b34545]',
     barAccent: 'bg-[#b34545]',
-    icon: 'alerts',
-  },
+    icon: 'alerts'
+  }
 ]
+}
 
 function StatIcon({ type }) {
   if (type === 'bookings') {
@@ -68,7 +78,9 @@ function Sparkline({ accent }) {
   )
 }
 
-function DashboardStats() {
+function DashboardStats({ stats }) {
+  const cards = buildCards(stats)
+
   return (
     <div className="grid gap-3 lg:grid-cols-3">
       {cards.map((card) => (

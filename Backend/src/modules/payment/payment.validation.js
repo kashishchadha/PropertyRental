@@ -10,7 +10,14 @@ const bookingPaymentsValidation = [
   param('bookingId').isInt({ min: 1 }).withMessage('Invalid booking id')
 ];
 
+const createStripeCheckoutValidation = [
+  body('booking_id').isInt({ min: 1 }).withMessage('booking_id must be positive integer'),
+  body('success_url').optional().isURL({ require_tld: false }).withMessage('success_url must be a valid URL'),
+  body('cancel_url').optional().isURL({ require_tld: false }).withMessage('cancel_url must be a valid URL')
+];
+
 module.exports = {
   createPaymentValidation,
-  bookingPaymentsValidation
+  bookingPaymentsValidation,
+  createStripeCheckoutValidation
 };

@@ -1,3 +1,7 @@
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { propertyApi } from '../../modules/property/services/propertyApi'
+
 function PinIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-(--color-primary)" stroke="currentColor" strokeWidth="2">
@@ -36,27 +40,108 @@ function SearchIcon() {
   )
 }
 
-function FilterItem({ icon, label, value }) {
+function FilterItem({ icon, label, children }) {
   return (
-    <div className="min-w-[140px] px-3 py-1">
+    <div className="min-w-35 px-3 py-1">
       <div className="mb-1 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-(--color-secondary)">
         {icon}
         <span>{label}</span>
       </div>
-      <div className="text-sm font-semibold text-(--color-secondary)">{value}</div>
+      {children}
     </div>
   )
 }
 
 function HeroSearchBar() {
+  const navigate = useNavigate()
+  const [properties, setProperties] = useState([])
+  const [form, setForm] = useState({ city: '', min_price: '', max_price: '', min_guests: '' })
+
+  useEffect(() => {
+    const loadCities = async () => {
+      try {
+        const data = await propertyApi.list()
+        setProperties(data)
+      } catch {
+        setProperties([])
+      }
+    }
+
+    loadCities()
+  }, [])
+
+  const cityOptions = useMemo(() => {
+    const values = properties.map((property) => property.city).filter(Boolean)
+    return [...new Set(values)].sort((a, b) => a.localeCompare(b))
+  }, [properties])
+
+  const setField = (field, value) => {
+    setForm((previous) => ({ ...previous, [field]: value }))
+  }
+
+  const handleSearch = () => {
+    const query = new URLSearchParams()
+    if (form.city.trim()) query.set('city', form.city.trim())
+    if (form.min_price !== '') query.set('min_price', String(Number(form.min_price)))
+    if (form.max_price !== '') query.set('max_price', String(Number(form.max_price)))
+    if (form.min_guests !== '') query.set('min_guests', String(Number(form.min_guests)))
+
+    const queryString = query.toString()
+    navigate(queryString ? `/properties?${queryString}` : '/properties')
+  }
+
   return (
     <div className="mx-auto mt-8 flex w-full max-w-5xl flex-col gap-3 rounded-[26px] border border-white/60 bg-white/95 p-3 shadow-2xl md:flex-row md:items-center md:gap-0 md:p-2">
-      <FilterItem icon={<PinIcon />} label="Location" value="Where to?" />
+      <FilterItem icon={<PinIcon />} label="Location">
+        <>
+          <input
+            value={form.city}
+            onChange={(event) => setField('city', event.target.value)}
+            list="hero-city-list"
+            placeholder="Where to?"
+            className="h-8 w-full rounded-md border border-slate-200 px-2 text-sm font-semibold text-(--color-secondary) outline-none"
+          />
+          <datalist id="hero-city-list">
+            {cityOptions.map((city) => (
+              <option key={city} value={city} />
+            ))}
+          </datalist>
+        </>
+      </FilterItem>
       <div className="hidden h-10 w-px bg-slate-200 md:block" />
-      <FilterItem icon={<CashIcon />} label="Budget" value="Price Range" />
+      <FilterItem icon={<CashIcon />} label="Budget">
+        <div className="flex items-center gap-1">
+          <input
+            type="number"
+            min="0"
+            value={form.min_price}
+            onChange={(event) => setField('min_price', event.target.value)}
+            placeholder="Min"
+            className="h-8 w-20 rounded-md border border-slate-200 px-2 text-xs font-semibold text-(--color-secondary) outline-none"
+          />
+          <span className="text-xs text-slate-400">-</span>
+          <input
+            type="number"
+            min="0"
+            value={form.max_price}
+            onChange={(event) => setField('max_price', event.target.value)}
+            placeholder="Max"
+            className="h-8 w-20 rounded-md border border-slate-200 px-2 text-xs font-semibold text-(--color-secondary) outline-none"
+          />
+        </div>
+      </FilterItem>
       <div className="hidden h-10 w-px bg-slate-200 md:block" />
-      <FilterItem icon={<HomeIcon />} label="Type" value="Villa" />
-      <button className="btn-primary-theme mt-1 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold shadow-md md:ml-auto md:mt-0">
+      <FilterItem icon={<HomeIcon />} label="Guests">
+        <input
+          type="number"
+          min="1"
+          value={form.min_guests}
+          onChange={(event) => setField('min_guests', event.target.value)}
+          placeholder="Min guests"
+          className="h-8 w-full rounded-md border border-slate-200 px-2 text-sm font-semibold text-(--color-secondary) outline-none"
+        />
+      </FilterItem>
+      <button type="button" onClick={handleSearch} className="btn-primary-theme mt-1 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold shadow-md md:ml-auto md:mt-0">
         <SearchIcon />
         Search
       </button>

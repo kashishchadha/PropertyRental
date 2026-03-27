@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuthStore } from '../modules/auth/store/useAuthStore'
 import { propertyApi } from '../modules/property/services/propertyApi'
+import { bookingApi } from '../modules/booking/services/bookingApi'
 import { api } from '../services/api'
 import p1 from '../assets/p1.avif'
 import p2 from '../assets/p2.avif'
@@ -23,6 +24,10 @@ function PropertyDetail() {
   const [reviews, setReviews] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
+  const [checkIn, setCheckIn] = useState('')
+  const [checkOut, setCheckOut] = useState('')
+  const [isBooking, setIsBooking] = useState(false)
+  const [bookingError, setBookingError] = useState('')
 
   const canEdit = useMemo(() => {
     if (!user || !property) return false
@@ -69,6 +74,37 @@ function PropertyDetail() {
     }
   }
 
+  const canBook = isAuthenticated && (user.role === 'tenant' || user.role === 'admin')
+
+  const handleCreateBooking = async () => {
+    setBookingError('')
+
+    if (!canBook) {
+      setBookingError('Please login as tenant/admin to create a booking.')
+      return
+    }
+
+    if (!checkIn || !checkOut) {
+      setBookingError('Please select both check-in and check-out dates.')
+      return
+    }
+
+    try {
+      setIsBooking(true)
+      const booking = await bookingApi.create({
+        property_id: Number(property.id),
+        start_date: checkIn,
+        end_date: checkOut
+      })
+
+      navigate(`/booking-payment/${booking.id}`)
+    } catch (err) {
+      setBookingError(err.message || 'Failed to create booking')
+    } finally {
+      setIsBooking(false)
+    }
+  }
+
   if (isLoading) {
     return <div className="p-6 text-sm text-slate-500">Loading property...</div>
   }
@@ -85,7 +121,7 @@ function PropertyDetail() {
   return (
     <div className="min-h-screen bg-[#f3f5f8] text-(--color-ink)">
       <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex h-16 w-full max-w-[1240px] items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-16 w-full max-w-310 items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link to="/" className="text-xl font-bold">EstateConcierge</Link>
 
           <nav className="hidden items-center gap-6 text-sm font-semibold text-(--color-secondary) md:flex">
@@ -115,7 +151,7 @@ function PropertyDetail() {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-[1240px] px-4 py-6 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-310 px-4 py-6 sm:px-6 lg:px-8">
         <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Properties . Listing #{property.id}</p>
 
         <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
@@ -145,11 +181,11 @@ function PropertyDetail() {
         </div>
 
         <section className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]">
-          <img src={gallery[0]} alt="Property" className="h-[240px] w-full rounded-2xl object-cover md:h-[360px] lg:row-span-2 lg:h-[520px]" />
-          <img src={gallery[1]} alt="Property" className="h-[170px] w-full rounded-2xl object-cover md:h-[250px]" />
-          <img src={gallery[2]} alt="Property" className="h-[170px] w-full rounded-2xl object-cover md:h-[250px]" />
-          <img src={gallery[3]} alt="Property" className="h-[170px] w-full rounded-2xl object-cover md:h-[250px]" />
-          <img src={gallery[4]} alt="Property" className="h-[170px] w-full rounded-2xl object-cover md:h-[250px]" />
+          <img src={gallery[0]} alt="Property" className="h-60 w-full rounded-2xl object-cover md:h-90 lg:row-span-2 lg:h-130" />
+          <img src={gallery[1]} alt="Property" className="h-42.5 w-full rounded-2xl object-cover md:h-62.5" />
+          <img src={gallery[2]} alt="Property" className="h-42.5 w-full rounded-2xl object-cover md:h-62.5" />
+          <img src={gallery[3]} alt="Property" className="h-42.5 w-full rounded-2xl object-cover md:h-62.5" />
+          <img src={gallery[4]} alt="Property" className="h-42.5 w-full rounded-2xl object-cover md:h-62.5" />
         </section>
 
         <section className="mt-8 grid gap-8 lg:grid-cols-[1fr_330px]">
@@ -202,11 +238,39 @@ function PropertyDetail() {
                 <p className="pt-2 text-sm text-slate-500">/ night</p>
               </div>
 
-              <Link to="/booking-payment" className="btn-primary-theme mt-4 block w-full rounded-xl py-3 text-center text-base font-semibold shadow-lg shadow-blue-900/20">
-                Book Now
-              </Link>
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <label className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+                  Check-in
+                  <input
+                    type="date"
+                    value={checkIn}
+                    onChange={(event) => setCheckIn(event.target.value)}
+                    className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-2 text-sm"
+                  />
+                </label>
+                <label className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+                  Check-out
+                  <input
+                    type="date"
+                    value={checkOut}
+                    onChange={(event) => setCheckOut(event.target.value)}
+                    className="mt-1 h-10 w-full rounded-lg border border-slate-300 px-2 text-sm"
+                  />
+                </label>
+              </div>
 
-              <p className="mt-3 text-center text-xs text-slate-400">Booking flow is available from this listing.</p>
+              <button
+                type="button"
+                onClick={handleCreateBooking}
+                disabled={isBooking}
+                className="btn-primary-theme mt-4 block w-full rounded-xl py-3 text-center text-base font-semibold shadow-lg shadow-blue-900/20 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isBooking ? 'Creating booking...' : 'Book Now'}
+              </button>
+
+              {!isAuthenticated ? <p className="mt-3 text-center text-xs text-slate-400">Login required to create booking.</p> : null}
+              {isAuthenticated && !canBook ? <p className="mt-3 text-center text-xs text-slate-400">Owner accounts cannot create tenant bookings.</p> : null}
+              {bookingError ? <p className="mt-3 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-700">{bookingError}</p> : null}
             </div>
           </aside>
         </section>

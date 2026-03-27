@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuthStore } from '../modules/auth/store/useAuthStore'
 import { propertyApi } from '../modules/property/services/propertyApi'
 import p1 from '../assets/p1.avif'
@@ -177,12 +177,35 @@ function PropertyCard({ property, index, canManage, canEdit, onDelete }) {
 function AllProperties() {
   const user = useAuthStore((state) => state.user)
   const canManage = user?.role === 'owner' || user?.role === 'admin'
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [properties, setProperties] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
   const [filters, setFilters] = useState({ city: '', min_price: '', max_price: '', min_guests: '' })
   const [activeFilters, setActiveFilters] = useState({})
+
+  useEffect(() => {
+    const city = searchParams.get('city') || ''
+    const minPrice = searchParams.get('min_price') || ''
+    const maxPrice = searchParams.get('max_price') || ''
+    const minGuests = searchParams.get('min_guests') || ''
+
+    setFilters({
+      city,
+      min_price: minPrice,
+      max_price: maxPrice,
+      min_guests: minGuests
+    })
+
+    const nextActive = {}
+    if (city.trim()) nextActive.city = city.trim()
+    if (minPrice !== '') nextActive.min_price = Number(minPrice)
+    if (maxPrice !== '') nextActive.max_price = Number(maxPrice)
+    if (minGuests !== '') nextActive.min_guests = Number(minGuests)
+
+    setActiveFilters(nextActive)
+  }, [searchParams])
 
   const loadProperties = async (query = {}) => {
     try {
@@ -211,12 +234,19 @@ function AllProperties() {
     if (filters.min_price !== '') nextFilters.min_price = Number(filters.min_price)
     if (filters.max_price !== '') nextFilters.max_price = Number(filters.max_price)
     if (filters.min_guests !== '') nextFilters.min_guests = Number(filters.min_guests)
-    setActiveFilters(nextFilters)
+
+    const nextSearchParams = new URLSearchParams()
+    if (nextFilters.city) nextSearchParams.set('city', nextFilters.city)
+    if (nextFilters.min_price !== undefined) nextSearchParams.set('min_price', String(nextFilters.min_price))
+    if (nextFilters.max_price !== undefined) nextSearchParams.set('max_price', String(nextFilters.max_price))
+    if (nextFilters.min_guests !== undefined) nextSearchParams.set('min_guests', String(nextFilters.min_guests))
+
+    setSearchParams(nextSearchParams)
   }
 
   const handleResetFilters = () => {
     setFilters({ city: '', min_price: '', max_price: '', min_guests: '' })
-    setActiveFilters({})
+    setSearchParams(new URLSearchParams())
   }
 
   const handleDelete = async (propertyId) => {

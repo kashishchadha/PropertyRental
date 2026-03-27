@@ -111,9 +111,7 @@ function BookingPayment() {
 
   return (
     <div className="min-h-screen bg-[#f1f3f7] text-(--color-ink)">
-      <div className="flex h-8 items-center bg-[#121821] px-4 text-sm font-semibold text-slate-200 sm:px-6 lg:px-8">
-        Booking & Payment
-      </div>
+     
 
       <main className="mx-auto max-w-7xl rounded-t-xl bg-[#f6f8fb] px-4 pb-6 pt-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">

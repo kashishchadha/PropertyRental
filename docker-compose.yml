@@ -1,0 +1,62 @@
+# Use your existing Backend/.env for secrets and DB settings.
+# Compose needs those variables for the MySQL service — run:
+#   docker compose --env-file Backend/.env up --build
+# Or copy/symlink Backend/.env to ./.env in the repo root (Compose loads .env automatically).
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: property_rental_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: property_rental
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p\"$$MYSQL_ROOT_PASSWORD\" || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 25
+      start_period: 30s
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./Backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  api:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: property_rental_api
+    restart: on-failure
+    env_file:
+      - Backend/.env
+    environment:
+      # Overrides for Docker network only (keep DB_PASSWORD, JWT, Stripe, etc. from Backend/.env)
+      DB_HOST: mysql
+      DB_PORT: 3306
+      PORT: 5000
+      TRUST_PROXY: "1"
+      FRONTEND_BASE_URL: http://localhost
+      CORS_ORIGINS: http://localhost,http://127.0.0.1,http://localhost:80,http://127.0.0.1:80
+    ports:
+      - "5000:5000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api/v1
+    container_name: property_rental_web
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+volumes:
+  mysql_data:

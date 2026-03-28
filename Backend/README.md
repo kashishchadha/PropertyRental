@@ -39,14 +39,20 @@ npm run dev
 GET http://localhost:5000/health
 ```
 
-## Run with Docker
+## Run with Docker (full stack)
+
+From the **repository root** (not this folder):
+
+1. Use your existing **`Backend/.env`** (same as local dev). Add **`MYSQL_ROOT_PASSWORD`** (any strong value) — required for the MySQL container.
+2. Run (so Compose can read `DB_PASSWORD` and `MYSQL_ROOT_PASSWORD` for MySQL):
 
 ```bash
-docker compose up --build
+docker compose --env-file Backend/.env up --build
 ```
 
-API: http://localhost:5000
-MySQL host port: 3307
+- App (nginx + React): http://localhost  
+- API (direct): http://localhost:5000 (overrides `PORT` from `Backend/.env` to `5000` inside Docker)  
+- MySQL from host: `localhost:3307` (`DB_PORT` in `Backend/.env` is ignored inside Docker; the API uses `3306` against the `mysql` service)
 
 ## API Prefix
 

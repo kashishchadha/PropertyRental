@@ -1,4 +1,0 @@
-CONTAINER ID   IMAGE                COMMAND                  CREATED              STATUS                        PORTS                                         NAMES
-6c33fe80ef3a   propertyrental-api   "docker-entrypoint.s…"   About a minute ago   Up About a minute             0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp   property_rental_api
-f9468f9d538b   mysql:8.4            "docker-entrypoint.s…"   About a minute ago   Up About a minute (healthy)   0.0.0.0:3307->3306/tcp, [::]:3307->3306/tcp   property_rental_mysql
-ebf810d3b219   propertyrental-web   "/docker-entrypoint.…"   About a minute ago   Up About a minute             0.0.0.0:80->80/tcp, [::]:80->80/tcp           property_rental_web

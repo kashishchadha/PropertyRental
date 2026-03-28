@@ -1,5 +1,0 @@
- Network propertyrental_default Creating 
- Network propertyrental_default Created 
- Container property_rental_mysql Creating 
- Container property_rental_mysql Error response from daemon: Conflict. The container name "/property_rental_mysql" is already in use by container "c8d1d138d0d953538487594608046225dd3b31b7b226c2ceef4c7a4883a507d1". You have to remove (or rename) that container to be able to reuse that name. 
-Error response from daemon: Conflict. The container name "/property_rental_mysql" is already in use by container "c8d1d138d0d953538487594608046225dd3b31b7b226c2ceef4c7a4883a507d1". You have to remove (or rename) that container to be able to reuse that name.
